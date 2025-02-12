@@ -153,7 +153,48 @@ class SQLHelper():
                         Year asc;""")
             
         df = pd.read_sql(query, con=conn, params={"shape": shape})
-
         # Close the connection
         conn.close()
         return(df)
+    
+    def queryBubbleData(self,min_year,shape):
+        # Create our session (link) from Python to the DB
+        conn = self.engine.connect() # Raw SQL/Pandas
+
+        # Define Query
+        if shape == "all":
+            query = text(f"""SELECT
+                        Year as year,
+                        Hour as Hour,
+                        Estimated_Encounter_Duration_Minutes as Estimated_Encounter_Duration_Minutes
+                    FROM
+                       UFO_data
+                    WHERE
+                        Year >= {min_year}
+                    GROUP BY
+                        Year
+                    ORDER BY
+                        Year asc;""")
+        else:
+        # When shape is specified, filter by UFO_shape
+            query = text(f"""SELECT
+                        Year as year,
+                        Hour as Hour,
+                        Estimated_Encounter_Duration_Minutes as Estimated_Encounter_Duration_Minutes
+                    FROM
+                        UFO_data
+                    WHERE
+                        Year >= {min_year} AND UFO_shape = :shape
+                    GROUP BY
+                        Year
+                    ORDER BY
+                        Year asc;""")
+            
+        df = pd.read_sql(query, con=conn, params={"shape": shape})
+        # Close the connection
+        conn.close()
+        return(df)
+    
+
+
+

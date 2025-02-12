@@ -41,6 +41,7 @@ function doWork() {
   let url1 = `/api/v1.0/bar_data/${min_year}/${selected_shape}`;
   let url2 = `/api/v1.0/table_data/${min_year}/${selected_shape}`;
   let url3 = `/api/v1.0/scatter_data/${min_year}/${selected_shape}`;
+  let url4 = `/api/v1.0/bubble_data/${min_year}/${selected_shape}`;
 
   // Make Request
   d3.json(url1).then(function (data) {
@@ -57,6 +58,12 @@ function doWork() {
     //Make scatter plot
     console.log(data)
     makeScatterplot(data);
+  });
+
+  d3.json(url4).then(function (data){
+    //Make scatter plot
+    console.log(data)
+    makeBubbleplot(data);
   });
 }
 
@@ -145,4 +152,42 @@ function makeBarPlot(data) {
 
   // Render the plot to the div tag with id "plot"
   Plotly.newPlot('plot', traces, layout);
+}
+
+function makeBubbleplot(data) {
+  // Prepare data for the scatter plot
+  let trace = {
+    x: data.map(row => row.year),
+    y: data.map(row => row.Hour),
+    text: data.map(row => row.year),
+    mode: 'markers',
+    marker: {
+      color: data.map(row => row.year),
+      size: data.map(row => row.Estimated_Encounter_Duration_Minutes),
+      colorscale: 'Picnic'
+    }
+  };
+
+  let traces = [trace];
+
+  let layout = {
+    title: {
+      text: 'UFO Sightings by Year'
+    },
+    yaxis: {
+      title: {
+        text: 'Hour of the Day'
+      }
+    },
+    xaxis: {
+      title: {
+        text: 'Year'
+      }
+    },
+    height: 600
+  };
+
+  // Render the Bubble Chart
+  Plotly.newPlot('bubble', traces, layout);
+
 }
