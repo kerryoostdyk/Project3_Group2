@@ -86,6 +86,15 @@ def bubble_data(min_year,shape):
     data= df.to_dict(orient="records")
     return jsonify(data)
 
+@app.route("/api/v1.0/donut_data/<min_year>/<shape>")
+def donut_data(min_year,shape):
+    #Execute Query
+    df=sqlHelper.queryDonutData(min_year,shape)
+
+    #Turn dataframe into List of Dictionary
+    data= df.to_dict(orient="records")
+    return jsonify(data)
+
 #############################################################
 
 # ELIMINATE CACHING

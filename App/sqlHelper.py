@@ -128,27 +128,27 @@ class SQLHelper():
         # Define Query
         if shape == "all":
             query = text(f"""SELECT
-                        Year as year,
+                        Country as country,
                         count (*) as num_ufosighting
                     FROM
                        UFO_data
                     WHERE
                         Year >= {min_year}
                     GROUP BY
-                        Year
+                        Country,Year
                     ORDER BY
                         Year asc;""")
         else:
         # When shape is specified, filter by UFO_shape
             query = text(f"""SELECT
-                        Year as year,
+                        Country as country,
                         count (*) as num_ufosighting
                     FROM
                         UFO_data
                     WHERE
                         Year >= {min_year} AND UFO_shape = :shape
                     GROUP BY
-                        Year
+                        Country,Year
                     ORDER BY
                         Year asc;""")
             
@@ -195,6 +195,40 @@ class SQLHelper():
         conn.close()
         return(df)
     
+    def queryDonutData(self, min_year,shape):
+        # Create our session (link) from Python to the DB
+        conn = self.engine.connect() # Raw SQL/Pandas
 
+        # Define Query
+        if shape == "all":
+            query = text(f"""SELECT
+                        Season as season,
+                        count (*) as num_ufosighting
+                    FROM
+                        UFO_data
+                    WHERE
+                        Year >= {min_year}
+                    GROUP BY
+                        Season
+                    ORDER BY
+                        Year asc;""")
+        else:
+        # When shape is specified, filter by UFO_shape
+            query = text(f"""SELECT
+                        Season as season,
+                        count (*)as num_ufosighting
+                    FROM
+                        UFO_data
+                    WHERE
+                        Year >= {min_year} AND UFO_shape = :shape
+                    GROUP BY
+                        Season
+                    ORDER BY
+                        Year asc;""")
+        
+    # Execute the query with parameter for UFO shape
+        df = pd.read_sql(query, con=conn, params={"shape": shape})
 
-
+        # Close the connection
+        conn.close()
+        return(df)

@@ -42,6 +42,7 @@ function doWork() {
   let url2 = `/api/v1.0/table_data/${min_year}/${selected_shape}`;
   let url3 = `/api/v1.0/scatter_data/${min_year}/${selected_shape}`;
   let url4 = `/api/v1.0/bubble_data/${min_year}/${selected_shape}`;
+  let url5 = `/api/v1.0/donut_data/${min_year}/${selected_shape}`;
 
   // Make Request
   d3.json(url1).then(function (data) {
@@ -61,9 +62,15 @@ function doWork() {
   });
 
   d3.json(url4).then(function (data){
-    //Make scatter plot
+    //Make bubble plot
     console.log(data)
     makeBubbleplot(data);
+  });
+
+  d3.json(url5).then(function (data){
+    //Make bubble plot
+    console.log(data)
+    makeDonutchart(data);
   });
 }
 
@@ -98,17 +105,17 @@ function makeTable(data) {
 function makeScatterplot(data) {
   // Prepare data for the scatter plot
   let trace = {
-    x: data.map(row => row.year), // x-axis: Longitude
-    y: data.map(row => row.num_ufosighting),  // y-axis: Latitude
+    x: data.map(row => row.country), 
+    y: data.map(row => row.num_ufosighting),  
     mode: 'markers',
     type: 'scatter',
-    marker: { color: 'firebrick' }
+    marker: { color: 'lightgreen' }
   };
 
   // Layout for the scatter plot
   let layout = {
     title: { text: 'UFO Sightings by Location' },
-    xaxis: { title: { text: 'Year' } },
+    xaxis: { title: { text: 'Country' } },
     yaxis: { title: { text: 'Number of UFO sightings' } },
     height: 600
   };
@@ -125,7 +132,7 @@ function makeBarPlot(data) {
     y: data.map(row => row.num_ufosighting),
     type: 'bar',
     marker: {
-      color: 'firebrick'
+      color: 'lightblue'
     }
   }
 
@@ -190,4 +197,29 @@ function makeBubbleplot(data) {
   // Render the Bubble Chart
   Plotly.newPlot('bubble', traces, layout);
 
+}
+
+function makeDonutchart(data) {
+  // Prepare data for the donut chart
+  console.log(data)
+  let trace = {
+    values: data.map(row => row.num_ufosighting), 
+    labels: data.map(row => row.season),
+    type: 'pie',
+    hole: 0.4,
+	  marker: { colors: ['lightgreen', 'lightblue', 'grey', 'yellow'] }
+  };
+
+  // Layout for the Donut Chart
+  let layout = {
+    title: { text: 'UFO Sightings by Season' },
+    height: 500,
+    width: 600,
+    showlegend: true,
+  };
+
+  // Render the plot using Plotly
+  Plotly.newPlot('donut', [trace], layout);
+  
+  
 }
