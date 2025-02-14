@@ -15,6 +15,13 @@ function createMap(min_year) {
   attribution: 'Map data: &copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors, <a href="http://viewfinderpanoramas.org">SRTM</a> | Map style: &copy; <a href="https://opentopomap.org">OpenTopoMap</a> (<a href="https://creativecommons.org/licenses/by-sa/3.0/">CC-BY-SA</a>)'
   });
 
+  var alienIcon = L.icon({
+    iconUrl: 'https://upload.wikimedia.org/wikipedia/commons/5/5b/Alien-hack-master.png?20090504175006',
+    iconSize: [38, 95],
+    iconAnchor: [22, 94],
+    popupAnchor: [-3, -76]
+  });
+
   // Assemble the API query URL.
   let url = `/api/v1.0/map_data/${min_year}`;
   console.log(url);
@@ -31,7 +38,7 @@ function createMap(min_year) {
     for (let i = 0; i < data.length; i++){
       let row = data[i];
 
-      let marker = L.marker([row.latitude, row.longitude]).bindPopup(`<h1>${row.country}</h1><h3>${row.year}</h3><h4>${row.UFO_shape}</h4>`);
+      let marker = L.marker([row.latitude, row.longitude], {icon: alienIcon}).bindPopup(`<h1>${row.country}</h1><h3>${row.year}</h3><h4>${row.UFO_shape}</h4>`);
       markers.addLayer(marker);
 
       // Heatmap point
@@ -43,6 +50,7 @@ function createMap(min_year) {
       radius: 25,
       blur: 10
     });
+
 
     // Step 3: CREATE THE LAYER CONTROL
     let baseMaps = {
