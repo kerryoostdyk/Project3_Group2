@@ -57,10 +57,6 @@ function createMap(min_year) {
 
   };
      
-function init() {
-  let min_year = d3.select("#min_year").property("value");
-  createMap(min_year);
-}
 
 d3.select("filter-btn").on("click", function () {
   init();
