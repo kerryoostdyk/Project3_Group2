@@ -38,7 +38,7 @@ function createMap(min_year) {
     for (let i = 0; i < data.length; i++){
       let row = data[i];
 
-      let marker = L.marker([row.latitude, row.longitude], {icon: alienIcon}).bindPopup(`<h1>${row.country}</h1><h3>${row.year}</h3><h4>${row.UFO_shape}</h4>`);
+      let marker = L.marker([row.latitude, row.longitude], {icon: alienIcon}).bindPopup(`<h1>${row.region}</h1><h3>Hour of day: ${row.hour}</h3><h3>${row.year}</h3><h4>UFO shape: ${row.UFO_shape}</h4>`);
       markers.addLayer(marker);
 
       // Heatmap point
@@ -66,7 +66,7 @@ function createMap(min_year) {
     // Step 4: INITIALIZE THE MAP
     let myMap = L.map("map", {
       center: [40.7128, -74.0059],
-      zoom: 7,
+      zoom: 4,
       layers: [street, markers]
     });
 

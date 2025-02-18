@@ -105,6 +105,8 @@ class SQLHelper():
         query = text(f"""SELECT
                     Year as year,
                     Season as season,
+                    Hour as hour,
+                    Region as region,
                     Country as country,
                     UFO_shape as UFO_shape,
                     Latitude as latitude,
