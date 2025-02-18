@@ -50,6 +50,17 @@ def bar_data(min_year,shape):
     data = df.to_dict(orient="records")
     return jsonify(data)
 
+@app.route("/api/v1.0/countrybar_data/<min_year>/<shape>")
+def countrybar_data(min_year,shape):
+    # Execute queries
+    df = sqlHelper.queryCountryBarData(min_year,shape)
+
+    # Turn DataFrame into List of Dictionary
+    data = df.to_dict(orient="records")
+    return jsonify(data)
+
+
+
 @app.route("/api/v1.0/table_data/<min_year>/<shape>")
 def table_data(min_year,shape):
     # Execute Query
@@ -94,6 +105,8 @@ def donut_data(min_year,shape):
     #Turn dataframe into List of Dictionary
     data= df.to_dict(orient="records")
     return jsonify(data)
+
+
 
 #############################################################
 
