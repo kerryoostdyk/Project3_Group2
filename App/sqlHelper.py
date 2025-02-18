@@ -54,7 +54,48 @@ class SQLHelper():
         # Close the connection
         conn.close()
         return(df)
+    
+    def queryCountryBarData(self, min_year,shape):
+        # Create our session (link) from Python to the DB
+        conn = self.engine.connect() # Raw SQL/Pandas
 
+        # Define Query
+        if shape == "all":
+            query = text(f"""SELECT
+                        Country as country,
+                        count (*) as num_ufosighting
+                    FROM
+                        UFO_data
+                    WHERE
+                        Year >= {min_year}
+                    GROUP BY
+                        Country
+                    ORDER BY
+                        num_ufosighting desc
+                    LIMIT 10    ;""")
+        else:
+        # When shape is specified, filter by UFO_shape
+            query = text(f"""SELECT
+                        Country as country,
+                        count (*)as num_ufosighting
+                    FROM
+                        UFO_data
+                    WHERE
+                        Year >= {min_year} AND UFO_shape = :shape
+                    GROUP BY
+                        Country
+                    ORDER BY
+                        num_ufosighting desc
+                    LIMIT 10 ;""")
+        
+    # Execute the query with parameter for UFO shape
+        df = pd.read_sql(query, con=conn, params={"shape": shape})
+
+        # Close the connection
+        conn.close()
+        return(df)
+    
+    
     def queryTableData(self, min_year,shape):
         # Create our session (link) from Python to the DB
         conn = self.engine.connect() # Raw SQL/Pandas
@@ -139,7 +180,7 @@ class SQLHelper():
                     GROUP BY
                         Country,Year
                     ORDER BY
-                        Year asc;""")
+                        num_ufosighting asc;""")
         else:
         # When shape is specified, filter by UFO_shape
             query = text(f"""SELECT
@@ -152,7 +193,7 @@ class SQLHelper():
                     GROUP BY
                         Country,Year
                     ORDER BY
-                        Year asc;""")
+                        num_ufosighting asc;""")
             
         df = pd.read_sql(query, con=conn, params={"shape": shape})
         # Close the connection
@@ -234,3 +275,5 @@ class SQLHelper():
         # Close the connection
         conn.close()
         return(df)
+    
+    

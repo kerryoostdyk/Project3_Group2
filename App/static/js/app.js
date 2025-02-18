@@ -43,6 +43,10 @@ function doWork() {
   let url3 = `/api/v1.0/scatter_data/${min_year}/${selected_shape}`;
   let url4 = `/api/v1.0/bubble_data/${min_year}/${selected_shape}`;
   let url5 = `/api/v1.0/donut_data/${min_year}/${selected_shape}`;
+  let url6 = `/api/v1.0/countrybar_data/${min_year}/${selected_shape}`;
+  
+  
+  
 
   // Make Request
   d3.json(url1).then(function (data) {
@@ -67,11 +71,22 @@ function doWork() {
     makeBubbleplot(data);
   });
 
+  
   d3.json(url5).then(function (data){
-    //Make bubble plot
+    //Make donut chart
     console.log(data)
     makeDonutchart(data);
   });
+
+  d3.json(url6).then(function (data){
+    //Make bar plot
+    console.log(data)
+    makeCountryBarPlot(data);
+  });
+
+  
+
+  
 }
 
 
@@ -161,6 +176,43 @@ function makeBarPlot(data) {
   Plotly.newPlot('plot', traces, layout);
 }
 
+function makeCountryBarPlot(data) {
+  // Create Trace
+  let trace = {
+    x: data.map(row => row.country),
+    y: data.map(row => row.num_ufosighting),
+    type: 'bar',
+    marker: {
+      color: 'yellow'
+    }
+  }
+
+  // Data trace array
+  let traces = [trace];
+
+  // Apply a title to the layout
+  let layout = {
+    title: {
+      text: `Number of UFOSightings for Top 10 Countries`
+    },
+    yaxis: {
+      title: {
+        text: 'Number of UFOSightings'
+      }
+    },
+    xaxis: {
+      title: {
+        text: 'Country'
+      }
+    },
+    height: 600
+  }
+
+  // Render the plot to the div tag with id "plot"
+  Plotly.newPlot('barplot', traces, layout);
+}
+
+
 function makeBubbleplot(data) {
   // Prepare data for the scatter plot
   let trace = {
@@ -223,3 +275,4 @@ function makeDonutchart(data) {
   
   
 }
+
