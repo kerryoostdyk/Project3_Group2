@@ -157,11 +157,11 @@ function makeBarPlot(data) {
   // Apply a title to the layout
   let layout = {
     title: {
-      text: `Number of UFOSightings by Year`
+      text: `Number of UFO Sightings by Year`
     },
     yaxis: {
       title: {
-        text: 'Number of UFOSightings'
+        text: 'Number of UFO Sightings'
       }
     },
     xaxis: {
@@ -193,11 +193,11 @@ function makeCountryBarPlot(data) {
   // Apply a title to the layout
   let layout = {
     title: {
-      text: `Number of UFOSightings for Top 10 Countries`
+      text: `Number of UFO Sightings for Top 10 Countries`
     },
     yaxis: {
       title: {
-        text: 'Number of UFOSightings'
+        text: 'Number of UFO Sightings'
       }
     },
     xaxis: {
