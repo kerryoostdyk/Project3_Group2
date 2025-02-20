@@ -22,7 +22,7 @@
 <body>
   <nav class="navbar navbar-expand-lg bg-primary" data-bs-theme="dark">
     <div class="container-fluid">
-      <a class="navbar-brand" href="#">
+      <a class="navbar-brand" href="/">
         <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1vIeIcH0Z8nSX5xxBni4a-1e8SZFBB8XyEg&s" width="50" height="50" class="rounded-circle mb-3" alt="Member 1">
       </a>
       <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarColor01" aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
@@ -31,11 +31,12 @@
       <div class="collapse navbar-collapse" id="navbarColor01">
         <ul class="navbar-nav me-auto">
           <li class="nav-item">
-            <a class="nav-link" href="/">Home
+            <a class="nav-link " href="/">Home
               <span class="visually-hidden">(current)</span>
             </a>
           </li>
           <li class="nav-item">
+            <a class="nav-link active" href="/dashboard">Dashboard</a>
             <a class="nav-link active" href="/dashboard">Dashboard</a>
           </li>
           <li class="nav-item">
@@ -53,19 +54,24 @@
       </nav>
 
       <header class="bg-primary text-white text-center py-5">
-      <h1>UFOSighting Data!</h1>
+      <h1>UFO Sighting Data</h1>
     <div class="container-fluid">
-      <div class="row align-items-center">
+      <!--<div class="row align-items-center">-->
+        <div class="row justify-content-center align-items-center">
         <!--<div class="row">-->
-            <div class="col-md-2">
-              <!--<div class="d-flex align-items-center">-->
-                <div class="d-flex flex-column">  
+            <div class="col-md-3">
+              <small class="form-text text-dark">Select a minimum year to view sightings.</small>
+              <div class="d-flex align-items-center">
+               <!-- <div class="d-flex flex-column">  -->
                 <!--<label class="col-form-label" for="min-year">Min Year</label>-->
+               
                 <label for="min-year" class ="me-2">Min Year</label>
                 <input class="form-control" id="min-year" name="min-year" type="number" value="1949" min="1949" style="width: 150px;">
+                
                </div> 
             </div>
-              <div class="col-md-2">
+              <div class="col-md-3">
+                <small class="form-text text-dark">Select a UFO shape to filter sightings.</small>
                   <label for="UFO_Shape">UFO Shape</label>
                   <select id="ufo-shape" name="ufo_shape">
                     <option value="all" selected>All</option>
@@ -81,12 +87,12 @@
         </div>
       <!--</div> --> 
         <div class="row mt-2">
-          <div class="col-md-1">
+          <div class="col-md-8">
               <button type="button" class="btn btn-primary" id="filter-btn" style="background-color: #FF858D; color: white;">Filter!</button>
         </div>
         </div>
         </div>
-            
+         <hr>   
             <!-- BAR -->
             <div class="row">
             <div class="col-md-6">
@@ -97,7 +103,7 @@
            <div id="scatter-plot"></div>  
            </div>
            </div>
-
+           <hr>
            <!-- BAR(country) -->
            <div class="row">
            <div class="col-md-6">
@@ -110,7 +116,7 @@
             <div id="bubble"></div> 
           </div>
           </div>
-
+          <hr>
           <!-- Donut Chart -->
           <div class="row">
           <div class="col-md-6">
@@ -143,7 +149,7 @@
 
 
     <footer class="bg-dark text-white text-center py-3">
-      <p>&copy; 2025 UFOSighting Data App. All rights reserved.</p>
+      <p>&copy; 2025 UFO Sighting Data App. All rights reserved.</p>
     </footer>
 
 </body>
